@@ -1,3 +1,6 @@
+1個目のテーブルの色を赤にするには、CSSのスタイルを変更します。以下のように、1個目のテーブルに特定のクラスを追加し、そのクラスに対してスタイルを設定します：
+
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -55,26 +58,49 @@
         a:hover {
             background-color: #45a049;
         }
+        /* 1個目のテーブルのスタイル */
+        .first-table th {
+            background-color: {{colorval}};
+        }
     </style>
 </head>
 <body>
     <h1>積み立て確認ページ</h1>
-    <table>
+    <table class="first-table">
         <tr>
-            <th>ユーザーID</th>
+            <!-- <th>ユーザーID</th>
             <th>名前</th>
-            <th>メールアドレス</th>
+            <th>メールアドレス</th> -->
             <th>現在の積み立て額（円）</th>
         </tr>
         {% for user in users %}
         <tr>
-            <td>{{ user.id }}</td>
+            <!-- <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
+            <td>{{ user.email }}</td> -->
             <td>{{ user.balance|int }}</td>
         </tr>
         {% endfor %}
     </table>
+
+    <table>
+        <tr>
+            <th>品目</th>
+            <th>日時</th>
+            <th>積み立て額（円）</th>
+        </tr>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.itemname }}</td>
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>    
+
     <a href="/">トップページに戻る</a>
 </body>
 </html>
+```
+
+この変更により、1個目のテーブルのヘッダーの背景色が赤になります。他に何かお手伝いできることがありますか？

@@ -89,35 +89,39 @@ def create10_percent(data):
 def add_transaction_page():
     if request.method == "POST":
         amount = int(request.form.get("amount"))
-        option = int(request.form.get("rounding_option"))  # 端数設定を取得
+        # option = int(request.form.get("rounding_option"))  # 端数設定を取得
+        option = int(request.form.get("item_option"))  # 端数設定を
         
         if option == 1 :
             # 切り捨て
-            fractional_amount = 10 
+            item_name = "お茶/コーヒー" 
         elif option == 2:
-            fractional_amount = 50
+            item_name = "お菓子" 
         elif option == 3:
-            fractional_amount = 100
+            item_name = "飲み代" 
         elif option == 4:
-            fractional_amount = amount * 0.05 
+            item_name = "おごり（家族）" 
         elif option == 5:
-            fractional_amount = amount * 0.1
+            item_name = "おごり（友人）" 
         elif option == 6:
-            fractional_amount = amount * 0.2
+            item_name = "家電" 
         else:
-            fractional_amount = 0
+            item_name = "その他"
             
-        fractional_amount = int(fractional_amount)
+        # fractional_amount = int(fractional_amount)
+
         # 取引を保存
-        transaction = Transaction(user_id=current_user.id, amount=amount, date=datetime.now())
+        transaction = Transaction(user_id=current_user.id, amount=amount, itemname=item_name, date=datetime.now())
         db.session.add(transaction)
 
         # ユーザーの貯金額を更新
-        current_user.balance += fractional_amount
+        # current_user.balance += fractional_amount
+        current_user.balance += amount
         db.session.commit()
 
         # Successページにリダイレクト
-        return render_template("success.html", user=current_user, amount=fractional_amount)
+        # return render_template("success.html", user=current_user, amount=fractional_amount)
+        return render_template("success.html", user=current_user, amount=amount)
 
     return render_template("add_transaction.html")
 
@@ -155,8 +159,17 @@ def add_friend():
 @app.route("/view_savings")
 @login_required
 def view_savings_page():
+
+    if current_user.balance >= 0:
+        colorval = "#45a049"
+    else:
+        colorval = "#FF0000"
+
+
+    # users = User.query.all()  # If you want all users displayed
     users = User.query.all()  # If you want all users displayed
-    return render_template("view_savings.html", users=users, user=current_user)
+    transactions = Transaction.query.all()  # If you want all users displayed
+    return render_template("view_savings.html", transactions=transactions, users = users, user=current_user, colorval = colorval)
 
 @app.route("/send_gift", methods=["GET", "POST"])
 @login_required

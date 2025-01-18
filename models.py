@@ -87,3 +87,4 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     amount = db.Column(db.Integer, nullable=False)
     date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    itemname = db.Column(db.String(100), nullable=True)  # ここに新しいカラムを追加

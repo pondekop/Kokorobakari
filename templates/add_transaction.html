@@ -90,17 +90,18 @@
             <label for="amount">金額:</label>
             <input type="number" id="amount" name="amount" placeholder="金額を入力" required>
 
-            <label for="rounding_option">金額設定:</label>
-            <select id="rounding_option" name="rounding_option" required>
-                <option value="1">10円</option>
-                <option value="2">50円</option>
-                <option value="3">100円</option>
-                <option value="4">5%</option>
-                <option value="5">10%</option>
-                <option value="6">20%</option>
+            <label for="item_option">金額設定:</label>
+            <select id="item_option" name="item_option" required>
+                <option value="0"></option>
+                <option value="1">お茶/コーヒー</option>
+                <option value="2">お菓子</option>
+                <option value="3">飲み代</option>
+                <option value="4">おごり（家族）</option>
+                <option value="5">おごり（友人）</option>
+                <option value="6">家電</option>
             </select>
 
-            <img src="images/QR1.png" alt="QR Code">
+            <!-- <img src="images/QR1.png" alt="QR Code"> -->
             <button type="submit">登録</button>
         </form>
         <a href="/index">トップページに戻る</a>
