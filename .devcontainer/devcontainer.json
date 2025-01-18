@@ -1,0 +1,20 @@
+{
+    "name": "Python Dev Container kokorobakari",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "ms-python.python",  // PythonのVSCode拡張機能
+        "ms-python.vscode-pylance"  // 高速でスマートなPythonコードナビゲーション
+    ],
+    "forwardPorts": [],
+    "remoteUser": "root",  // ルートユーザーで作業を行う
+    "workspaceFolder": "/workspace"
+}
