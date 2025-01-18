@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ギフト送信</title>
+</head>
+<body>
+    <h1>ギフトを送る</h1>
+    <form method="POST">
+        <label for="receiver">送信先:</label>
+        <select name="receiver" id="receiver" required>
+            {% for friend in friends %}
+            <option value="{{ friend.id }}">{{ friend.name }}</option>
+            {% endfor %}
+        </select>
+        <label for="gift_option">ギフト:</label>
+        <select name="gift_option" id="gift_option" required>
+            <option value="10円">10円</option>
+            <option value="100円">100円</option>
+            <option value="1000円">1000円</option>
+        </select>
+        <button type="submit">送信</button>
+    </form>
+    <a href="/">トップページに戻る</a>
+</body>
+</html>

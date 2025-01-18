@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>積み立て確認</title>
+</head>
+<body>
+    <h1>積み立て確認ページ</h1>
+    <table border="1">
+        <tr>
+            <th>ユーザーID</th>
+            <th>名前</th>
+            <th>メールアドレス</th>
+            <th>現在の積み立て額（円）</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.balance|int }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">トップページに戻る</a>
+</body>
+</html>

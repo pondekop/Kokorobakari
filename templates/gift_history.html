@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>現在持っているギフト</title>
+</head>
+<body>
+    <h1>現在持っているギフト</h1>
+    <table border="1">
+        <tr>
+            <th>ユーザー名</th>
+            <th>現在のギフト</th>
+        </tr>
+        {% for user_id, gifts in current_gifts.items() %}
+        <tr>
+            <td>{{ users[user_id].name }}</td>
+            <td>
+                {% if gifts %}
+                    {{ ", ".join(gifts) }}
+                {% else %}
+                    ギフトなし
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">トップページに戻る</a>
+</body>
+</html>
