@@ -79,6 +79,11 @@ def logout():
     flash("ログアウトしました。")
     return redirect(url_for("login_page"))
 
+
+def create10_percent(data):
+    return data * 0.1
+
+
 @app.route("/add_transaction", methods=["GET", "POST"])
 @login_required
 def add_transaction_page():
@@ -87,8 +92,8 @@ def add_transaction_page():
         rounding_option = int(request.form.get("rounding_option"))  # 端数設定を取得
 
         # 選択された端数設定で切り上げ
-        rounded_amount = (amount + (rounding_option - 1)) // rounding_option * rounding_option
-        fractional_amount = rounded_amount - amount
+        rounded_amount = amount * 0.1 
+        fractional_amount = rounded_amount
 
         # 取引を保存
         transaction = Transaction(user_id=current_user.id, amount=amount, date=datetime.now())
