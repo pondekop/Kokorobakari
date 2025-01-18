@@ -106,6 +106,8 @@ def add_transaction_page():
             fractional_amount = amount * 0.2
         else:
             fractional_amount = 0
+            
+        fractional_amount = int(fractional_amount)
         # 取引を保存
         transaction = Transaction(user_id=current_user.id, amount=amount, date=datetime.now())
         db.session.add(transaction)
