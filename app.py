@@ -89,12 +89,23 @@ def create10_percent(data):
 def add_transaction_page():
     if request.method == "POST":
         amount = int(request.form.get("amount"))
-        rounding_option = int(request.form.get("rounding_option"))  # 端数設定を取得
-
-        # 選択された端数設定で切り上げ
-        rounded_amount = amount * 0.1 
-        fractional_amount = rounded_amount
-
+        option = int(request.form.get("rounding_option"))  # 端数設定を取得
+        
+        if option == 1 :
+            # 切り捨て
+            fractional_amount = 10 
+        elif option == 2:
+            fractional_amount = 50
+        elif option == 3:
+            fractional_amount = 100
+        elif option == 4:
+            fractional_amount = amount * 0.05 
+        elif option == 5:
+            fractional_amount = amount * 0.1
+        elif option == 6:
+            fractional_amount = amount * 0.2
+        else:
+            fractional_amount = 0
         # 取引を保存
         transaction = Transaction(user_id=current_user.id, amount=amount, date=datetime.now())
         db.session.add(transaction)

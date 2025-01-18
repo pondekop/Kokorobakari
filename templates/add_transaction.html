@@ -84,7 +84,7 @@
 <body>
     <div class="form-container">
         <h1>取引登録</h1>
-        <p>以下のフォームに金額と端数設定を入力してください。</p>
+        <p>以下のフォームに今回払う金額を入れてください</p>
         <p>端数設定に合わせて繰り上げ計算された金額が積み立てに加算されます。</p>
         <form method="POST">
             <label for="amount">金額:</label>
@@ -92,9 +92,12 @@
 
             <label for="rounding_option">端数設定:</label>
             <select id="rounding_option" name="rounding_option" required>
-                <option value="10">10円単位</option>
-                <option value="100">100円単位</option>
-                <option value="1000">1000円単位</option>
+                <option value="1">10円</option>
+                <option value="2">50円</option>
+                <option value="3">100円</option>
+                <option value="4">5%</option>
+                <option value="5">10%</option>
+                <option value="6">20%</option>
             </select>
 
             <img src="images/QR1.png" alt="QR Code">
