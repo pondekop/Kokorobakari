@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>節約トラッカー</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFFFFF;
+            color: #333333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        button {
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .plus-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .plus-button:hover {
+            background-color: #45a049;
+        }
+        .minus-button {
+            background-color: #f44336;
+            color: white;
+        }
+        .minus-button:hover {
+            background-color: #d32f2f;
+        }
+        .quick-button {
+            background-color: #92412b;
+            color: white;
+        }
+        .quick-button:hover {
+            background-color: #de8364;
+        }
+        input[type="number"],
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+        }
+        .record-list {
+            margin-top: 20px;
+        }
+        .record-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .record-list li {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            color: #333333;
+            font-weight: bold;
+        }
+        .record-list .plus {
+            background-color: #E8F5E9;
+            border: 1px solid #4CAF50;
+        }
+        .record-list .minus {
+            background-color: #FFEBEE;
+            border: 1px solid #f44336;
+        }
+        .total {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: center;
+            color: #4CAF50;
+        }
+        .add-button-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .add-button-form input {
+            margin: 5px;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>節約トラッカー</h1>
+    </header>
+    <div class="container">
+        <div class="total">
+            合計: <span id="total">0</span> ¥
+        </div>
+
+        <div class="button-group">
+            <button class="plus-button" id="plus-button">＋</button>
+            <button class="minus-button" id="minus-button">－</button>
+        </div>
+        <form id="savings-form" style="display: none;">
+            <input type="number" id="amount" placeholder="金額を入力 (例: 500)" required>
+            <input type="text" id="description" placeholder="説明を入力 (例: コーヒーを節約)" required>
+            <button type="submit">記録を追加</button>
+        </form>
+
+        <div class="quick-buttons" id="quick-buttons">
+            <button class="quick-button" data-description="コーヒー" data-amount="150">コーヒー (-150)</button>
+            <button class="quick-button" data-description="ペットボトル飲料" data-amount="120">ペットボトル飲料 (-120)</button>
+            <button class="quick-button" data-description="お菓子" data-amount="200">お菓子 (-200)</button>
+        </div>
+
+        <div class="add-button-form">
+            <h3>独自のボタンを追加</h3>
+            <input type="text" id="new-button-description" placeholder="説明 (例: コンビニジュース)">
+            <input type="number" id="new-button-amount" placeholder="金額 (例: 300)">
+            <button id="add-new-button">ボタンを追加</button>
+        </div>
+
+        <div class="record-list">
+            <h2>記録</h2>
+            <ul id="record-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const plusButton = document.getElementById('plus-button');
+        const minusButton = document.getElementById('minus-button');
+        const form = document.getElementById('savings-form');
+        const recordList = document.getElementById('record-list');
+        const totalElement = document.getElementById('total');
+        const quickButtons = document.getElementById('quick-buttons');
+        const addNewButton = document.getElementById('add-new-button');
+        const newButtonDescription = document.getElementById('new-button-description');
+        const newButtonAmount = document.getElementById('new-button-amount');
+
+        let currentType = "";
+        let total = 0;
+
+        plusButton.addEventListener('click', () => {
+            currentType = "plus";
+            form.style.display = "block";
+        });
+
+        minusButton.addEventListener('click', () => {
+            currentType = "minus";
+            form.style.display = "block";
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const amount = parseFloat(document.getElementById('amount').value);
+            const description = document.getElementById('description').value;
+
+            const record = document.createElement('li');
+            record.textContent = `${description}: ${currentType === 'plus' ? '+' : '-'}${amount} ¥`;
+            record.classList.add(currentType);
+
+            recordList.appendChild(record);
+
+            total += currentType === 'plus' ? amount : -amount;
+            totalElement.textContent = total.toFixed(2);
+
+            form.reset();
+            form.style.display = "none";
+        });
+
+        quickButtons.addEventListener('click', (event) => {
+            if (event.target.classList.contains('quick-button')) {
+                const amount = parseFloat(event.target.getAttribute('data-amount'));
+                const description = event.target.getAttribute('data-description');
+
+                const record = document.createElement('li');
+                record.textContent = `${description}: -${Math.abs(amount)} ¥`;
+                record.classList.add('minus');
+
+                recordList.appendChild(record);
+
+                total -= Math.abs(amount);
+                totalElement.textContent = total.toFixed(2);
+            }
+        });
+
+        addNewButton.addEventListener('click', () => {
+            const description = newButtonDescription.value;
+            const amount = parseFloat(newButtonAmount.value);
+
+            if (description && !isNaN(amount)) {
+                const button = document.createElement('button');
+                button.classList.add('quick-button');
+                button.setAttribute('data-description', description);
+                button.setAttribute('data-amount', amount);
+                button.textContent = `${description} (-${Math.abs(amount)})`;
+                quickButtons.appendChild(button);
+                newButtonDescription.value = "";
+                newButtonAmount.value = "";
+            }
+        });
+    </script>
+</body>
+</html>

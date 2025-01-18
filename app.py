@@ -80,8 +80,6 @@ def logout():
     return redirect(url_for("login_page"))
 
 
-def create10_percent(data):
-    return data * 0.1
 
 
 @app.route("/add_transaction", methods=["GET", "POST"])
@@ -215,3 +213,9 @@ def gift_history_page():
             current_gifts[owner.id].append(gift_name)
 
     return render_template("gift_history.html", current_gifts=current_gifts, users=users)
+
+@app.router("/kokoromoti")
+@login_required
+def kokoromoti_page():
+    return render_template("kokoromoti.html", user=current_user)
+
