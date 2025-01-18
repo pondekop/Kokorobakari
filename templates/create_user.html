@@ -2,22 +2,90 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規ユーザー登録</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>新規ユーザー登録</h1>
-    <form method="POST" action="/create_user">
-        <label for="name">ユーザー名:</label>
-        <input type="text" name="name" id="name" required>
-        <br>
-        <label for="email">メールアドレス:</label>
-        <input type="email" name="email" id="email" required>
-        <br>
-        <label for="password">パスワード:</label>
-        <input type="password" name="password" id="password" required>
-        <br>
-        <button type="submit">登録</button>
-    </form>
-    <p>既にアカウントをお持ちですか？ <a href="/login">こちらからログイン</a></p>
+    <div class="form-container">
+        <h1>新規ユーザー登録</h1>
+        <form method="POST" action="/create_user">
+            <label for="name">ユーザー名:</label>
+            <input type="text" name="name" id="name" required>
+            
+            <label for="email">メールアドレス:</label>
+            <input type="email" name="email" id="email" required>
+            
+            <label for="password">パスワード:</label>
+            <input type="password" name="password" id="password" required>
+            
+            <button type="submit">登録</button>
+        </form>
+        <p>既にアカウントをお持ちですか？ <a href="/login">こちらからログイン</a></p>
+    </div>
 </body>
 </html>

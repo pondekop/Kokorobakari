@@ -4,7 +4,7 @@ import uuid # 一意なIDを生成するためのライブラリ
 from sqlalchemy import ForeignKey
 
 db = SQLAlchemy()
-bcrypt = Bcrypt()
+bcrypt = ()
 friendships = db.Table(
     'friendships',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),

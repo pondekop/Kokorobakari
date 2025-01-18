@@ -2,25 +2,103 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ギフト送信</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 0.9rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 15px 20px;
+            }
+            button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>ギフトを送る</h1>
-    <form method="POST">
-        <label for="receiver">送信先:</label>
-        <select name="receiver" id="receiver" required>
-            {% for friend in friends %}
-            <option value="{{ friend.id }}">{{ friend.name }}</option>
-            {% endfor %}
-        </select>
-        <label for="gift_option">ギフト:</label>
-        <select name="gift_option" id="gift_option" required>
-            <option value="10円">10円</option>
-            <option value="100円">100円</option>
-            <option value="1000円">1000円</option>
-        </select>
-        <button type="submit">送信</button>
-    </form>
-    <a href="/">トップページに戻る</a>
+    <div class="form-container">
+        <h1>ギフトを送る</h1>
+        <form method="POST">
+            <label for="receiver">送信先:</label>
+            <select name="receiver" id="receiver" required>
+                {% for friend in friends %}
+                <option value="{{ friend.id }}">{{ friend.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="gift_option">ギフト:</label>
+            <select name="gift_option" id="gift_option" required>
+                <option value="10円">10円</option>
+                <option value="100円">100円</option>
+                <option value="1000円">1000円</option>
+            </select>
+
+            <button type="submit">送信</button>
+        </form>
+        <a href="/">トップページに戻る</a>
+    </div>
 </body>
 </html>
+

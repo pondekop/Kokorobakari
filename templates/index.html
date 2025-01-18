@@ -2,18 +2,81 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>トップページ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background-color: #4CAF50;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        ul li {
+            margin: 10px 0;
+        }
+        ul li a {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        strong {
+            color: #4CAF50;
+        }
+    </style>
 </head>
 <body>
-    <h1>ようこそ、{{ user.name }} さん！</h1>
-    <a href="/logout">ログアウト</a>
+    <div class="container">
+        <h1>ようこそ、{{ user.name }} さん！</h1>
+        <a href="/logout">ログアウト</a>
 
-    <ul>
-        <li><a href="/add_transaction">取引登録</a></li>
-        <li><a href="/view_savings">積み立て確認</a></li>
-        <li><a href="/send_gift">ギフト送信</a></li>
-        <li><a href="/gift_history">ギフト履歴確認</a></li>
-    </ul>
-    <p>あなたの登録用ID: <strong>{{ user.unique_id }}</strong></p>
+        <ul>
+            <li><a href="/add_transaction">取引登録</a></li>
+            <li><a href="/view_savings">積み立て確認</a></li>
+            <li><a href="/send_gift">ギフト送信</a></li>
+            <li><a href="/gift_history">ギフト履歴確認</a></li>
+        </ul>
+        <p>あなたの登録用ID: <strong>{{ user.unique_id }}</strong></p>
+    </div>
 </body>
 </html>

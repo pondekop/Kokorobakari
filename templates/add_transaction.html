@@ -2,25 +2,98 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>取引登録</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 0.9rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>取引登録</h1>
-    <p>以下のフォームに金額と端数設定を入力してください。</p>
-    <p>端数設定に合わせて繰り上げ計算された金額が積み立てに加算されます。</p>
-    <form method="POST">
-        <label for="amount">金額:</label>
-        <input type="number" id="amount" name="amount" required>
+    <div class="form-container">
+        <h1>取引登録</h1>
+        <p>以下のフォームに金額と端数設定を入力してください。</p>
+        <p>端数設定に合わせて繰り上げ計算された金額が積み立てに加算されます。</p>
+        <form method="POST">
+            <label for="amount">金額:</label>
+            <input type="number" id="amount" name="amount" placeholder="金額を入力" required>
 
-        <label for="rounding_option">端数設定:</label>
-        <select id="rounding_option" name="rounding_option" required>
-            <option value="10">10円単位</option>
-            <option value="100">100円単位</option>
-            <option value="1000">1000円単位</option>
-        </select>
+            <label for="rounding_option">端数設定:</label>
+            <select id="rounding_option" name="rounding_option" required>
+                <option value="10">10円単位</option>
+                <option value="100">100円単位</option>
+                <option value="1000">1000円単位</option>
+            </select>
 
-        <button type="submit">登録</button>
-    </form>
-    <a href="/index">トップページに戻る</a>
+            <button type="submit">登録</button>
+        </form>
+        <a href="/index">トップページに戻る</a>
+    </div>
 </body>
 </html>
