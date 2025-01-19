@@ -227,3 +227,8 @@ def gift_history_page():
                 current_gifts[owner.id] = []
             current_gifts[owner.id].append(gift_name)
     return render_template("gift_history.html", current_gifts=current_gifts, users=users)
+
+@app.route('/result')
+@login_required
+def result():
+    return render_template('result.html')
