@@ -1,1 +1,56 @@
+
+
+-- "user"テーブルの作成
+CREATE TABLE "user" (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- giftテーブルの作成（"user"テーブルを参照）
+CREATE TABLE gift (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL,
+    recipient_id INTEGER NOT NULL,
+    gift_option_id INTEGER NOT NULL,
+    message TEXT,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES "user" (id) ON DELETE CASCADE,
+    FOREIGN KEY (recipient_id) REFERENCES "user" (id) ON DELETE CASCADE,
+    FOREIGN KEY (gift_option_id) REFERENCES gift_options (id) ON DELETE CASCADE
+);
+
+-- gift_optionsテーブルの作成
+CREATE TABLE gift_options (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    value INTEGER NOT NULL
+);
+
+-- savingテーブルの作成（"user"テーブルを参照）
+CREATE TABLE saving (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE
+);
+
+-- transactionテーブルの作成（"user"テーブルを参照）
+CREATE TABLE transaction (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE
+);
+
+
+ALTER TABLE "user" RENAME COLUMN username TO name;
+ALTER TABLE "user" RENAME COLUMN password_hash TO password;
+ALTER TABLE "user" ADD COLUMN balance DECIMAL(10, 2);
+ALTER TABLE "user" ADD COLUMN is_active_field BOOLEAN;
+ALTER TABLE "user" ADD COLUMN unique_id VARCHAR(255);
 ALTER TABLE transaction ADD COLUMN itemname VARCHAR(100);

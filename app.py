@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 app = Flask(__name__, static_folder='./templates/images')
 app.secret_key = 'your_secret_key'  # セッションに必要な秘密鍵を設定
 bcrypt = Bcrypt(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/Kokorobakari'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@pgsql_db:5432/Kokorobakari"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 migrate = Migrate(app, db)
 db.init_app(app)
@@ -226,5 +226,4 @@ def gift_history_page():
             if owner.id not in current_gifts:
                 current_gifts[owner.id] = []
             current_gifts[owner.id].append(gift_name)
-
     return render_template("gift_history.html", current_gifts=current_gifts, users=users)

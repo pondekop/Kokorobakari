@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月間収支詳細</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .month-selector {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        select {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .record-list {
+            margin-top: 20px;
+        }
+        .record-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .record-list li {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: space-between;
+        }
+        .record-list .negative {
+            color: #f44336;
+        }
+        .record-list .positive {
+            color: #4CAF50;
+        }
+        .total {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .total.positive {
+            color: #4CAF50;
+        }
+        .total.negative {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>月間収支詳細</h1>
+    </header>
+    <div class="container">
+        <div class="month-selector">
+            <label for="month">月を選択:</label>
+            <select id="month">
+                <option value="1">1月</option>
+                <option value="2">2月</option>
+                <option value="3">3月</option>
+                <option value="4">4月</option>
+                <option value="5">5月</option>
+                <option value="6">6月</option>
+                <option value="7">7月</option>
+                <option value="8">8月</option>
+                <option value="9">9月</option>
+                <option value="10">10月</option>
+                <option value="11">11月</option>
+                <option value="12">12月</option>
+            </select>
+        </div>
+        <div class="record-list">
+            <h2>選択された月の詳細</h2>
+            <ul id="record-list"></ul>
+        </div>
+        <div class="total" id="total">
+            合計: 0円
+        </div>
+    </div>
+
+    <script>
+        const recordData = {
+            1: [
+                { date: "1月 5日", description: "コーヒー代", amount: -150 },
+                { date: "1月 8日", description: "昼食代", amount: -800 },
+                { date: "1月 15日", description: "ボーナス", amount: 5000 },
+                { date: "1月 20日", description: "スナック代", amount: -200 },
+                { date: "1月 30日", description: "お小遣い", amount: 3000 },
+                { date: "1月 31日", description: "ペットボトル飲料", amount: -120 },
+            ],
+            2: [
+                { date: "2月 3日", description: "ペットボトル飲料", amount: -120 },
+                { date: "2月 10日", description: "電車代", amount: -500 },
+                { date: "2月 14日", description: "給料", amount: 4500 },
+                { date: "2月 20日", description: "コーヒー代", amount: -150 },
+                { date: "2月 25日", description: "昼食代", amount: -800 },
+                { date: "2月 28日", description: "お小遣い", amount: -3000 },
+            ],
+            // 他の月のデータを追加可能
+        };
+
+        const monthSelect = document.getElementById("month");
+        const recordList = document.getElementById("record-list");
+        const totalDisplay = document.getElementById("total");
+
+        function updateRecords(month) {
+            const records = recordData[month] || [];
+
+            recordList.innerHTML = "";
+            let total = 0;
+
+            records.forEach(record => {
+                const li = document.createElement("li");
+                li.innerHTML = `<span>${record.date}:</span> ${record.description}: ${record.amount > 0 ? '+' : ''}${record.amount}円`;
+                li.classList.add(record.amount > 0 ? 'positive' : 'negative');
+                recordList.appendChild(li);
+
+                total += record.amount;
+            });
+
+            totalDisplay.textContent = `合計: ${total > 0 ? '+' : ''}${total}円`;
+            totalDisplay.className = `total ${total > 0 ? 'positive' : 'negative'}`;
+        }
+
+        monthSelect.addEventListener("change", (event) => {
+            updateRecords(event.target.value);
+        });
+
+        // 初期表示
+        updateRecords(1);
+    </script>
+</body>
+</html>
