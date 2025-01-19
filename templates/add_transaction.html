@@ -79,6 +79,30 @@
             width: 150px;
             height: 150px;
         }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .key {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .key:active {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -101,10 +125,44 @@
                 <option value="6">家電</option>
             </select>
 
-            <!-- <img src="images/QR1.png" alt="QR Code"> -->
             <button type="submit">登録</button>
         </form>
+        <div class="keypad">
+            <div class="key">1</div>
+            <div class="key">2</div>
+            <div class="key">3</div>
+            <div class="key">4</div>
+            <div class="key">5</div>
+            <div class="key">6</div>
+            <div class="key">7</div>
+            <div class="key">8</div>
+            <div class="key">9</div>
+            <div class="key">0</div>
+            <div class="key">-</div>
+            <div class="key" id="clear">C</div>
+        </div>
         <a href="/index">トップページに戻る</a>
     </div>
+
+    <script>
+        const amountInput = document.getElementById('amount');
+        const keys = document.querySelectorAll('.key');
+
+        keys.forEach(key => {
+            key.addEventListener('click', () => {
+                if (key.id === 'clear') {
+                    amountInput.value = '';
+                } else if (key.textContent === '-') {
+                    if (!amountInput.value.startsWith('-')) {
+                        amountInput.value = '-' + amountInput.value;
+                    } else {
+                        amountInput.value = amountInput.value.substring(1);
+                    }
+                } else {
+                    amountInput.value += key.textContent;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
