@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>積み立て入力</title>
+    <title>PrivateCharge</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -23,15 +23,14 @@
             width: 100%;
             max-width: 400px;
         }
-        h1 {
+        .title {
+            background-color: #4CAF50;
+            color: white;
             text-align: center;
-            color: #4CAF50;
-            margin-bottom: 15px;
-        }
-        p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            padding: 26px 0;
+            margin: 0 -30px 20px;
         }
         label {
             display: block;
@@ -48,39 +47,79 @@
             font-size: 1rem;
             box-sizing: border-box;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+        .custom-button {
+            display: inline-block;
+            background-color: #CF8C5C;
             color: white;
             border: none;
             border-radius: 5px;
+            padding: 10px 20px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            margin: 10px 5px;
+            transition: background-color 0.2s ease;
         }
-        button:hover {
-            background-color: #45a049;
+        .custom-button:hover {
+            background-color: #CF8C5C;
         }
-        a {
+        .custom-button:active {
+            background-color: #FEAD73;
+        }
+        .top-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .top-buttons .minus-button,
+        .top-buttons .plus-button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .top-buttons .minus-button {
+            background-color: #FF5252;
+            color: white;
+        }
+        .top-buttons .plus-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .top-buttons .minus-button:hover {
+            background-color: #E53935;
+        }
+        .top-buttons .plus-button:hover {
+            background-color: #43A047;
+        }
+        .submit-button {
             display: block;
+            margin: 20px auto 0;
+            background-color: #6C757D;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-align: center;
-            margin-top: 15px;
-            text-decoration: none;
-            color: #4CAF50;
-            font-size: 0.9rem;
         }
-        a:hover {
-            text-decoration: underline;
+        .submit-button:hover {
+            background-color: #5A6268;
+            transform: scale(1.05);
         }
-        img {
-            display: block;
-            margin: 0 auto 20px;
-            width: 150px;
-            height: 150px;
+        .submit-button:active {
+            transform: scale(0.95);
         }
         .keypad {
-            display: grid;
+            display: none;
             grid-template-columns: repeat(3, 60px);
             gap: 10px;
             justify-content: center;
@@ -103,26 +142,35 @@
         .key:active {
             background-color: #ddd;
         }
+        .toggle-keypad {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .toggle-keypad button {
+            background: none;
+            border: none;
+            color: #4CAF50;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .toggle-keypad button:hover {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h1>取引登録</h1>
-        <p>以下のフォームに今回払う金額を入れてください</p>
-        <p>設定した金額が積み立てに加算されます。</p>
-        <div class="keypad">
-            <div class="key">1</div>
-            <div class="key">2</div>
-            <div class="key">3</div>
-            <div class="key">4</div>
-            <div class="key">5</div>
-            <div class="key">6</div>
-            <div class="key">7</div>
-            <div class="key">8</div>
-            <div class="key">9</div>
-            <div class="key">0</div>
-            <div class="key">-</div>
-            <div class="key" id="clear">C</div>
+        <h1 class="title">PrivateCharge</h1>
+
+        <div class="top-buttons">
+            <button class="minus-button" id="minus-button">-</button>
+            <button class="plus-button" id="plus-button">+</button>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="custom-button" id="coffee-button">コーヒー（-150）</button>
+            <button type="button" class="custom-button" id="bottle-drink-button">ペットボトル飲料（-120）</button>
+            <button type="button" class="custom-button" id="snack-button">お菓子（-200）</button>
         </div>
         <form method="POST">
             <label for="amount">金額:</label>
@@ -139,27 +187,79 @@
                 <option value="6">家電</option>
             </select>
 
-            <button type="submit">登録</button>
+            <button type="submit" class="submit-button">登録</button>
         </form>
+
+        <div class="toggle-keypad">
+            <button id="toggle-keypad-button">テンキーを表示</button>
+        </div>
+
+        <div class="keypad" id="keypad">
+            <div class="key">1</div>
+            <div class="key">2</div>
+            <div class="key">3</div>
+            <div class="key">4</div>
+            <div class="key">5</div>
+            <div class="key">6</div>
+            <div class="key">7</div>
+            <div class="key">8</div>
+            <div class="key">9</div>
+            <div class="key">0</div>
+            <div class="key" id="clear">C</div>
+        </div>
+
         <a href="/index">トップページに戻る</a>
     </div>
 
     <script>
         const amountInput = document.getElementById('amount');
+        const minusButton = document.getElementById('minus-button');
+        const plusButton = document.getElementById('plus-button');
+        const coffeeButton = document.getElementById('coffee-button');
+        const bottleDrinkButton = document.getElementById('bottle-drink-button');
+        const snackButton = document.getElementById('snack-button');
+        const toggleKeypadButton = document.getElementById('toggle-keypad-button');
+        const keypad = document.getElementById('keypad');
         const keys = document.querySelectorAll('.key');
 
+        toggleKeypadButton.addEventListener('click', () => {
+            const isKeypadVisible = keypad.style.display === 'grid';
+            keypad.style.display = isKeypadVisible ? 'none' : 'grid';
+            toggleKeypadButton.textContent = isKeypadVisible ? 'テンキーを表示' : 'テンキーを隠す';
+        });
+
+        minusButton.addEventListener('click', () => {
+            amountInput.value = amountInput.value.startsWith('-') ? amountInput.value : '-' + amountInput.value;
+        });
+
+        plusButton.addEventListener('click', () => {
+            if (amountInput.value.startsWith('-')) {
+                amountInput.value = amountInput.value.substring(1);
+            }
+        });
+
+        coffeeButton.addEventListener('click', () => {
+            amountInput.value = -150;
+            document.getElementById('item_option').value = "1";
+        });
+
+        bottleDrinkButton.addEventListener('click', () => {
+            amountInput.value = -120;
+            document.getElementById('item_option').value = "1";
+        });
+
+        snackButton.addEventListener('click', () => {
+            amountInput.value = -200;
+            document.getElementById('item_option').value = "2";
+        });
+
         keys.forEach(key => {
-            key.addEventListener('click', () => {
-                if (key.id === 'clear') {
+            key.addEventListener('click', (event) => {
+                const value = event.target.textContent;
+                if (value === 'C') {
                     amountInput.value = '';
-                } else if (key.textContent === '-') {
-                    if (!amountInput.value.startsWith('-')) {
-                        amountInput.value = '-' + amountInput.value;
-                    } else {
-                        amountInput.value = amountInput.value.substring(1);
-                    }
                 } else {
-                    amountInput.value += key.textContent;
+                    amountInput.value += value;
                 }
             });
         });
